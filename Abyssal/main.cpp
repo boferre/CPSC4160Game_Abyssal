@@ -8,8 +8,8 @@
 #include <SDL2/SDL_timer.h>
 
 //Screen dimension
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 
 SDL_Window* my_window = NULL;
 SDL_Renderer* my_renderer = NULL;
@@ -32,6 +32,53 @@ void my_SDL_init(){
 			       SCREEN_HEIGHT, 0);
   my_renderer = SDL_CreateRenderer(my_window,-1,0);
 
+}
+
+
+//Simple Player controller
+bool playerController(SDL_Rect& shipsRect, SDL_Event& handler) {
+	while(SDL_PollEvent(&handler) != 0) {
+		if (handler.type == SDL_QUIT) {
+			std::cout << "Quiting" << std::endl;
+			return false;
+		} else if (handler.type == SDL_KEYDOWN) {
+			switch(handler.key.keysym.sym ) {
+				case SDLK_UP:
+				std::cout << "UP" << std::endl;
+				shipsRect.y -= 1;
+				if (shipsRect.y <= 0)
+					shipsRect.y = 0;
+				break;
+				
+				case SDLK_DOWN:
+				std::cout << "DOWN" << std::endl;
+				shipsRect.y += 1;
+				if (shipsRect.y >= SCREEN_HEIGHT)
+					shipsRect.y = SCREEN_HEIGHT;
+				break;
+				
+				case SDLK_LEFT:
+				std::cout << "LEFT" << std::endl;
+				shipsRect.x -= 1;
+				if (shipsRect.x <= 0)
+					shipsRect.x = 0;
+				break;
+				
+				case SDLK_RIGHT:
+				std::cout << "RIGHT" << std::endl;
+				shipsRect.x += 1;
+					if (shipsRect.x >= SCREEN_WIDTH)
+						shipsRect.x = SCREEN_WIDTH;
+				break;
+			}
+			return true;
+		}
+    }
+}
+
+
+int fpsController() {
+	
 }
 
 
@@ -69,42 +116,7 @@ int main()
     clock_Ticks = SDL_GetTicks();
 	
 	// User control input handlers
-	while(SDL_PollEvent(&event_Handle) != 0) {
-		if (event_Handle.type == SDL_QUIT) {
-			std::cout << "Quiting" << std::endl;
-			game_Running = false;
-		} else if (event_Handle.type == SDL_KEYDOWN) {
-			switch(event_Handle.key.keysym.sym ) {
-				case SDLK_UP:
-				std::cout << "UP" << std::endl;
-				rect.y -= 1;
-				if (rect.y <= 0)
-					rect.y = 0;
-				break;
-				
-				case SDLK_DOWN:
-				std::cout << "DOWN" << std::endl;
-				rect.y += 1;
-				if (rect.y >= SCREEN_HEIGHT)
-					rect.y = SCREEN_HEIGHT;
-				break;
-				
-				case SDLK_LEFT:
-				std::cout << "LEFT" << std::endl;
-				rect.x -= 1;
-				if (rect.x <= 0)
-					rect.x = 0;
-				break;
-				
-				case SDLK_RIGHT:
-				std::cout << "RIGHT" << std::endl;
-				rect.x += 1;
-					if (rect.x >= SCREEN_WIDTH)
-						rect.x = SCREEN_WIDTH;
-				break;
-			}
-		}
-    } 
+	playerController(rect, event_Handle);
 		
 	// Set background color
 	SDL_SetRenderDrawColor(my_renderer, 0, 173, 216, 230);

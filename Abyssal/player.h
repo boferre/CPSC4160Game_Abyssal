@@ -1,8 +1,6 @@
 #include <string>
 
 #include <SDL2/SDL.h> 
-#include <SDL2/SDL_image.h> 
-#include <SDL2/SDL_timer.h>
 
 #ifndef player_H
 #define player_H
@@ -10,7 +8,7 @@
 class Player {
 	private:
 		int hullstrength;
-		int shipSpeed = 1;
+		int shipSpeed = 10;
 		
 		struct position {
 			int x = 0;

@@ -26,7 +26,7 @@ int main()
   
   // Starting initialization
   graphicController.SDL_Initialize();
-  graphicController.UpdateScreen();
+  graphicController.StartScreen("./Assets/Ships/Leisure/Cutter.png");
   
   // Main Game loop
   while(game_Running){
@@ -38,9 +38,11 @@ int main()
 	playerController.playerController();
 	
 	//Graphics Controlls
-	graphicController.PlaceObject(playerController.getPosX(), playerController.getPosY(), 400, 200, "./Assets/Ships/Destroyer/HighCapital.png");
+	graphicController.UpdateScreen(playerController.getPosX(), playerController.getPosY(), 27, 20);
+	
+	// AI Controls
     
-    /*// FPS Counter
+    // FPS Counter
     fps_counter++;
     if (clock_Ticks >= (last_Clock_Ticks + 1000)) {
 		last_Clock_Ticks = clock_Ticks;
@@ -48,12 +50,7 @@ int main()
 		fps_counter = 0;
 	}
 	//std::cout << current_fps << std::endl;
-	
-	
-	// FPS Controlls
-	fps_control = SDL_GetTicks() - clock_Ticks;
-	if (fps_control < fps_Set)
-		SDL_Delay(fps_Set - fps_control);*/
+
 
   }
   

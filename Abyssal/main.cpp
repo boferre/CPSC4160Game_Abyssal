@@ -9,7 +9,6 @@
 
 // custom files
 #include "graphics.h"
-#include "player.h"
 
 int main() 
 { 
@@ -22,25 +21,19 @@ int main()
   
   // Activate Controllers
   Graphics graphicController;
-  Player playerController;
   
   // Starting initialization
   graphicController.SDL_Initialize();
-  graphicController.StartScreen("./Assets/Ships/Leisure/Cutter.png");
+  graphicController.StartScreen();
   
   // Main Game loop
   while(game_Running){
     
     // Get Clock Ticks
-    //clock_Ticks = SDL_GetTicks();
-	
-	// User control input handlers
-	playerController.playerController();
+    clock_Ticks = SDL_GetTicks();
 	
 	//Graphics Controlls
-	graphicController.UpdateScreen(playerController.getPosX(), playerController.getPosY(), 27, 20);
-	
-	// AI Controls
+	graphicController.UpdateScreen();
     
     // FPS Counter
     fps_counter++;
@@ -49,7 +42,7 @@ int main()
 		current_fps = fps_counter;
 		fps_counter = 0;
 	}
-	//std::cout << current_fps << std::endl;
+	std::cout << current_fps << std::endl;
 
 
   }

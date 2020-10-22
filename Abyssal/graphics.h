@@ -1,11 +1,12 @@
 #include <iostream>
 #include <string>
 
-#include <SDL2/SDL.h> 
-#include <SDL2/SDL_image.h> 
-#include <SDL2/SDL_timer.h>
+#include <SDL.h> 
+#include <SDL_image.h> 
+#include <SDL_timer.h>
 #include "AI.h"
 #include "player.h"
+#include "animation.h"
 
 #ifndef graphic_H
 #define graphic_H
@@ -20,29 +21,29 @@ class Graphics {
 		
 		int fpsCounter = 0;
 		
-		const int WINDOW_WIDTH = 640;
-		const int WINDOW_HEIGHT = 480;
 		
-		const int LEVEL_WIDTH = 2000;
-		const int LEVEL_HEIGHT = 1000;
+		const int LEVEL_WIDTH = 852;
+		const int LEVEL_HEIGHT = 480;
+		
+		SDL_Rect cameraRect = {0, 0, 640, 480};
 		
 	public:
 		//Graphics();
 	
-		int getScreenWidth() {return LEVEL_WIDTH;};
-		int getScreenHeight() {return LEVEL_HEIGHT;};
-		int getCameraWidth() {return WINDOW_WIDTH;};
-		int getCameraHeight() {return WINDOW_HEIGHT;};
+		int getLevelWidth() {return LEVEL_WIDTH;};
+		int getLevelHeight() {return LEVEL_HEIGHT;};
+		int getCameraWidth() {return cameraRect.w;};
+		int getCameraHeight() {return cameraRect.h;};
 	
 		void SDL_Initialize();
 		void StartScreen();
 		void UpdateScreen();
-		
-		void AnimationPlayer(int frames, int loop);
+
 		void PlayerUpdate();
 		void AIUpdate();
 		
-		void cameraAdjust(); 
+		void cameraAdjust();
+		void backgroundUpdate();
 		
 		int fpsCount();
 		

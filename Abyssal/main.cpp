@@ -3,9 +3,9 @@
 #include <iostream>
 #include <string>
 
-#include <SDL2/SDL.h> 
-#include <SDL2/SDL_image.h> 
-#include <SDL2/SDL_timer.h>
+#include <SDL.h> 
+#include <SDL_image.h> 
+#include <SDL_timer.h>
 
 // custom files
 #include "graphics.h"
@@ -42,7 +42,7 @@ int main()
 		current_fps = fps_counter;
 		fps_counter = 0;
 	}
-	std::cout << current_fps << std::endl;
+	//std::cout << current_fps << std::endl;
 
 
   }

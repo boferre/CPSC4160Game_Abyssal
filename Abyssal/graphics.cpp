@@ -1,12 +1,4 @@
-#include <iostream>
-#include <string.h>
-
-#include <SDL2/SDL.h> 
-#include <SDL2/SDL_image.h> 
-#include <SDL2/SDL_timer.h>
-
 #include "graphics.h"
-#include "AI.h"
 
 // SDL initializer
 void Graphics::SDL_Initialize(){
@@ -20,8 +12,9 @@ void Graphics::SDL_Initialize(){
 	my_window = SDL_CreateWindow("Abyssal", 
 			       SDL_WINDOWPOS_CENTERED, 
 			       SDL_WINDOWPOS_CENTERED, 
-			       800,
-			       600, 0);
+			       getCameraWidth(),
+			       getCameraHeight(), 0);
+			       
 	my_renderer = SDL_CreateRenderer(my_window,-1,0); 
 
 }
@@ -29,17 +22,17 @@ void Graphics::SDL_Initialize(){
 
 void Graphics::StartScreen() {
 	// Set background color
-	SDL_SetRenderDrawColor(my_renderer, 3, 65, 65, 0);
+	//SDL_SetRenderDrawColor(my_renderer, 3, 65, 65, 0);
     SDL_RenderPresent(my_renderer);
-    aiController.createship(0, 700, 50, 87, 50, 180, "./Assets/Ships/Hunter/Cutter.png");
-    aiController.createship(1, 20, 400, 400, 200, 0, "./Assets/Ships/Destroyer/HighCapital.png");
 }
 
 
 void Graphics::UpdateScreen() {
+	playerController.playerController();
+	cameraAdjust();
 	SDL_RenderClear(my_renderer);
+	backgroundUpdate();
 	PlayerUpdate();
-	AIUpdate();
 	SDL_RenderPresent(my_renderer);
 }
 
@@ -55,28 +48,24 @@ int Graphics::fpsCount() {
 }
 
 
-void Graphics::AnimationPlayer(int frames, int loop) {
-	
-}
-
-
 void Graphics::PlayerUpdate() {
-	playerController.playerController();
+	
 	
 	SDL_Texture* textureHolder = NULL;
 	SDL_Surface* surfaceHolder;
-	
+	SDL_Rect frame;
 	SDL_Rect rect;
-	rect.x = playerController.getPosX();
-	rect.y = playerController.getPosY();
+	rect.x = playerController.getPosX() - cameraRect.x;
+	rect.y = playerController.getPosY() - cameraRect.y;
 	rect.w = playerController.getWidth();
 	rect.h = playerController.getHeight();
-	
+	// frame = 
 	surfaceHolder = IMG_Load(playerController.getShipFile());
 	textureHolder = SDL_CreateTextureFromSurface(my_renderer, surfaceHolder);
 	
+	
+	
 	SDL_FreeSurface(surfaceHolder);
-    //SDL_RenderCopy(my_renderer, textureHolder, NULL, &rect);
     SDL_RenderCopyEx(my_renderer, textureHolder, NULL, &rect, playerController.getAngle(), NULL, SDL_FLIP_NONE); 
 }
 
@@ -115,9 +104,35 @@ void Graphics::AIUpdate() {
 }
 
 
-void cameraAdjust() {
+void Graphics::cameraAdjust() {
+	cameraRect.x = (playerController.getPosX() - playerController.getWidth() / 2 ) - getCameraWidth() / 2;
+	cameraRect.y = (playerController.getPosY() - playerController.getHeight() / 2 ) - getCameraHeight() / 2;
 	
+	if (cameraRect.x < 0)
+		cameraRect.x = 0;
+	if (cameraRect.y < 0)
+		cameraRect.y = 0;
+	if (cameraRect.x > LEVEL_WIDTH - cameraRect.w)
+		cameraRect.x = LEVEL_WIDTH - cameraRect.w;
+	if (cameraRect.y > LEVEL_HEIGHT - cameraRect.h)
+		cameraRect.y = LEVEL_HEIGHT - cameraRect.h;
+}
+
+
+void Graphics::backgroundUpdate() {
+	SDL_Texture* textureHolder = NULL;
+	SDL_Surface* surfaceHolder;
 	
+	surfaceHolder = IMG_Load("./Assets/background.jpg");
+	textureHolder = SDL_CreateTextureFromSurface(my_renderer, surfaceHolder);
+	
+	SDL_FreeSurface(surfaceHolder);
+	
+	SDL_Rect renderArea = {0, 0, 0, 0};
+	renderArea.w = cameraRect.w;
+	renderArea.h = cameraRect.h;
+	
+    SDL_RenderCopyEx(my_renderer, textureHolder, &cameraRect, &renderArea, 0, NULL, SDL_FLIP_NONE);
 }
 
 

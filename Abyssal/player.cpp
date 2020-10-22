@@ -1,14 +1,9 @@
-#include <iostream>
-#include <string.h>
-
-#include <SDL2/SDL.h> 
-
 #include "player.h"
 
 bool Player::playerController() {
 	SDL_Event handler;	
 	
-	char* animState = "IDLE";
+	playCoord.animState = 0;
 	
 	// Tank based controls
 	while(SDL_PollEvent(&handler) != 0) {
@@ -35,7 +30,7 @@ bool Player::playerController() {
 					if (playCoord.angle <= 0) {
 						playCoord.angle = 359;
 					} else {
-						playCoord.angle--;
+						playCoord.angle -= 2;
 					}
 				break;
 				
@@ -44,7 +39,7 @@ bool Player::playerController() {
 					if (playCoord.angle >= 360) {
 						playCoord.angle = 0;
 					} else {
-							playCoord.angle ++;
+							playCoord.angle += 2;
 					}
 				break;
 			}
@@ -61,14 +56,62 @@ bool Player::playerController() {
 			playCoord.y += initialSpeed;
 		} else if (playCoord.angle <= 19 || playCoord.angle >= 340) {
 			playCoord.x += initialSpeed;
-		}
-		//ADD MORE CASES
+		} else if (playCoord.angle <= 110 && playCoord.angle >= 71) {
+			playCoord.y += initialSpeed;
+		} else if (playCoord.angle <= 339 && playCoord.angle >= 290) {
+			playCoord.x += initialSpeed;
+			playCoord.y -= initialSpeed;
+		} else if (playCoord.angle <= 289 && playCoord.angle >= 250) {
+			playCoord.y -= initialSpeed;
+		} else if (playCoord.angle <= 249 && playCoord.angle >= 200) {
+			playCoord.x -= initialSpeed;
+			playCoord.y -= initialSpeed;
+		} else if (playCoord.angle <= 199 && playCoord.angle >= 161) {
+			playCoord.x -= initialSpeed;
+		}                     
 	}
 	
+	// Boundary checks
+	if (playCoord.x < 0)
+		playCoord.x -= initialSpeed;
+	if (playCoord.x + playCoord.w > LEVEL_WIDTH)
+		playCoord.x = LEVEL_WIDTH - playCoord.w;
+	if (playCoord.y < 0)
+		playCoord.y -= initialSpeed;
+	if (playCoord.y + playCoord.h > LEVEL_HEIGHT)
+		playCoord.y = LEVEL_HEIGHT - playCoord.h;
 	
 	// Animation Setting
+	if (initialSpeed > 0)
+		playCoord.animState = 5;
+	if (initialSpeed < 0)
+		playCoord.animState = -5;
+		
+	// Animation Apply
+	switch (playCoord.animState) {
+			case 0:
+				playCoord.h = 25;
+				playCoord.w = 25;
+				playCoord.imageX = 0;
+				playCoord.imageY = 0;
+			break;
+			
+			case 5:
+				playCoord.h = 25;
+				playCoord.w = 25;
+				playCoord.imageX = 0;
+				playCoord.imageY = 0;
+			break;
+			
+			case -5:
+				playCoord.h = 25;
+				playCoord.w = 25;
+				playCoord.imageX = 0;
+				playCoord.imageY = 0;
+			break;
+	}
 	
-	
+	//std::cout << playCoord.x << std::endl;
 	//std::cout << playCoord.angle << std::endl;
 	//std::cout << initialSpeed << std::endl;
 	

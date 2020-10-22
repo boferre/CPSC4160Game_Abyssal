@@ -1,6 +1,8 @@
 #include <string>
+#include <iostream>
+#include <string.h>
 
-#include <SDL2/SDL.h> 
+#include <SDL.h> 
 
 #ifndef player_H
 #define player_H
@@ -23,11 +25,15 @@ class Player {
 			int h = 25;
 			int w = 25;
 			char* shipFile = "./Assets/Ships/Leisure/Cutter.png";
+			
+			int animState;
+			int imageX;
+			int imageY;
 		} playCoord;
 		
 		// Level constants
-		const int LEVEL_WIDTH = 2000;
-		const int LEVEL_HEIGHT = 1000;
+		const int LEVEL_WIDTH = 852;
+		const int LEVEL_HEIGHT = 480;
 		
 	public:
 	// Movement functions (velocity and orientation based)

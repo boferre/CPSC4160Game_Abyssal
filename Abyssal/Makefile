@@ -7,10 +7,10 @@ CC = g++
 CFLAGS = `sdl2-config --libs --cflags` -ggdb3 -O0 -Wall -lSDL2_image -lm 
 
 # add header files here
-HDRS = graphics.h player.h AI.h
+HDRS = graphics.h player.h AI.h animation.h
 
 # add source files here
-SRCS = main.cpp graphics.cpp player.cpp AI.cpp
+SRCS = main.cpp graphics.cpp player.cpp AI.cpp animation.cpp
 
 # generate names of object files
 OBJS = $(SRCS:.cpp=.o)

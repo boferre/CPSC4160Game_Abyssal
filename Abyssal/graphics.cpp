@@ -57,16 +57,17 @@ void Graphics::PlayerUpdate() {
 	SDL_Rect rect;
 	rect.x = playerController.getPosX() - cameraRect.x;
 	rect.y = playerController.getPosY() - cameraRect.y;
-	rect.w = playerController.getWidth();
-	rect.h = playerController.getHeight();
-	// frame = 
+	rect.w = playerController.getWidth() * 2;
+	rect.h = playerController.getHeight() * 2;
+	playAnimator.setFrames(playerController.getState());
+	frame = playAnimator.frameGrab(playerController.getImageX(), playerController.getImageY(), playerController.getHeight(), playerController.getWidth(), 0);
 	surfaceHolder = IMG_Load(playerController.getShipFile());
 	textureHolder = SDL_CreateTextureFromSurface(my_renderer, surfaceHolder);
 	
 	
 	
 	SDL_FreeSurface(surfaceHolder);
-    SDL_RenderCopyEx(my_renderer, textureHolder, NULL, &rect, playerController.getAngle(), NULL, SDL_FLIP_NONE); 
+    SDL_RenderCopyEx(my_renderer, textureHolder, &frame, &rect, playerController.getAngle(), NULL, SDL_FLIP_NONE); 
 }
 
 

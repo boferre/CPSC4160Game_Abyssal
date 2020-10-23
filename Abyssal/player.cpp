@@ -4,6 +4,7 @@ bool Player::playerController() {
 	SDL_Event handler;	
 	
 	playCoord.animState = 0;
+	playCoord.animStart = 0;
 	
 	// Tank based controls
 	while(SDL_PollEvent(&handler) != 0) {
@@ -84,30 +85,29 @@ bool Player::playerController() {
 	// Animation Setting
 	if (initialSpeed > 0)
 		playCoord.animState = 5;
+		playCoord.animStart = 2;
 	if (initialSpeed < 0)
 		playCoord.animState = -5;
+		playCoord.animStart = 2;
 		
 	// Animation Apply
 	switch (playCoord.animState) {
 			case 0:
-				playCoord.h = 25;
-				playCoord.w = 25;
+				playCoord.w = 27;
 				playCoord.imageX = 0;
 				playCoord.imageY = 0;
 			break;
 			
 			case 5:
-				playCoord.h = 25;
-				playCoord.w = 25;
+				playCoord.w = 37;
 				playCoord.imageX = 0;
-				playCoord.imageY = 0;
+				playCoord.imageY = 20;
 			break;
 			
 			case -5:
-				playCoord.h = 25;
-				playCoord.w = 25;
+				playCoord.w = 37;
 				playCoord.imageX = 0;
-				playCoord.imageY = 0;
+				playCoord.imageY = 40;
 			break;
 	}
 	

@@ -18,6 +18,7 @@ class Graphics {
 		
 		AI aiController;
 		Player playerController;
+		Animation playAnimator;
 		
 		int fpsCounter = 0;
 		

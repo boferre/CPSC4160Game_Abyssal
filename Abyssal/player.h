@@ -22,11 +22,12 @@ class Player {
 			int x = 0;
 			int y = 100;
 			int angle = 0;
-			int h = 25;
-			int w = 25;
-			char* shipFile = "./Assets/Ships/Leisure/Cutter.png";
+			int h = 20;
+			int w = 27;
+			char* shipFile = "./Assets/Ships/Leisure/FisherSprite.png";
 			
 			int animState;
+			int animStart;
 			int imageX;
 			int imageY;
 		} playCoord;
@@ -53,6 +54,11 @@ class Player {
 		
 	// Control functions
 		bool playerController();
+		
+		int getState() {return playCoord.animState;};
+		int getImageX() {return playCoord.imageX;};
+		int getImageY() {return playCoord.imageY;};
+		int getAnimStart() {return playCoord.animStart;};
 };
 
 #endif

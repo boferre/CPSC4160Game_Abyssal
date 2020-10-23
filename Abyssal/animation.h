@@ -9,10 +9,10 @@
 class Animation {
 	private:
 		int frameCount;
-		int currentFrame;
+		int currentFrame = 0;
 	public:
-		SDL_Rect frameGrab();
-		void setFrames(int frames);
+		SDL_Rect frameGrab(int imageX, int imageY, int imageH, int imageW, int afterStart);
+		void setFrames(int frames) {frameCount = abs(frames);};
 	
 };
 

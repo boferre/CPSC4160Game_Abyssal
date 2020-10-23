@@ -1,7 +1,27 @@
-ASG1 - Brandon Ferrell
+ASG3 - Brandon Ferrell
+
+---------------------------------------------------------------------------------------------------------------------
 
 TO RUN
 1. User the makefile to compile all code
 2. Compilled code will be named as Abyssal
 3. use ./Abyssal to run the game
-4. You can control the small sub using the arrow keys!
+
+---------------------------------------------------------------------------------------------------------------------
+
+NOTES
+- The two main helper class I've been using for this assignment is the player and animation files.
+- My gameEngine class (Called Graphics within my files and code) has been split off from the main game loop.
+	My thinking with this is that this would allow me to create a "Menu" class later on that would be
+	seperated from the game loop.
+- The Player Character works on a tank like controls. You use the left and right arrow keys to angle the ship
+	and the Up and Down arrow keys will accelerate the ship. Each Up/Down button press will
+	increase the velocity of the ship. In order to stop the ship, press the opposite arrow key
+	and the ship will slow down till reaching a halt. I'm currently playing around with speeds variability. 
+- The ship switches between 3 states: An Idle, Forward, and Backward. These are indicated via the movement
+	and the animations that play. With Idle, the ships rear engine are a silver color. When moving, the
+	rear engines turn a crimson color to simulate heated metal. Along with color change, bubbles will appear
+	depending on the direction of the ship. I.E. Forward will have a trail of bubbles behind, while Backwards
+	has a trail of bubbles in front.
+- (BUG) I've setup a primitive scrolling effect, there's a couple bugs with this in terms of my boundary collision. If
+	the ship is angled towards the boundary, it will vanish into the unknown and cannot be recovered.
